@@ -1,0 +1,192 @@
+# sheenatoysland
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>President Sheena’s Cosmic Toyland</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom right, pink, hotpink, deeppink);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .message {
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #000;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #fff;
+      color: deeppink;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    .toys {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .toy {
+      position: absolute;
+      font-size: 2em;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+
+    .caption {
+      margin-top: 30px;
+      font-weight: bold;
+      background: rgba(255, 182, 193, 0.3);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    audio {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="toys">
+    <div class="toy" style="top:20%; left:10%;">🧸</div>
+    <div class="toy" style="top:50%; left:80%;">🎀</div>
+    <div class="toy" style="top:75%; left:30%;">🪅</div>
+    <div class="toy" style="top:40%; left:60%;">🧁</div>
+    <div class="toy" style="top:30%; left:20%;">🦄</div>
+  </div>
+
+  <div class="container" id="scene">
+    <div class="message">Hi Sheena 👋</div>
+    <button onclick="nextStep()">Next</button>
+  </div>
+
+  <script>
+    let step = 0;
+
+    function nextStep() {
+      const scene = document.getElementById("scene");
+
+      if (step === 0) {
+        scene.innerHTML = `
+          <div class="message">Would you like to know who I am more?</div>
+          <button onclick="handleYes()">Yes</button>
+          <button onclick="handleNo()">No</button>
+        `;
+        step++;
+      }
+    }
+
+    function handleNo() {
+      document.getElementById("scene").innerHTML = `
+        <div class="message">Okay goodbye Sheena 😿</div>
+        <div class="caption">You floated off to Jupiter with a tub of ice cream. Yum.</div>
+      `;
+    }
+
+    function handleYes() {
+      document.getElementById("scene").innerHTML = `
+        <div class="message">My favorite color is brown. Which color do you like?</div>
+        <button onclick="pickColor('Brown')">Brown</button>
+        <button onclick="pickColor('Green')">Green</button>
+        <button onclick="pickColor('Blue')">Blue</button>
+        <button onclick="pickColor('Black')">Black</button>
+        <button onclick="pickColor('Pink')">Pink</button>
+      `;
+    }
+
+    function pickColor(color) {
+      let ending = "";
+      switch (color) {
+        case 'Brown':
+          ending = "You opened the Chocolate Portal and now live in a brownie castle! 🍫";
+          break;
+        case 'Green':
+          ending = "You turned into a giggling houseplant that sings lullabies 🌿";
+          break;
+        case 'Blue':
+          ending = "You got adopted by a cloud named Jeff who only speaks in haikus ☁️";
+          break;
+        case 'Black':
+          ending = "You became the boss of a bat-filled disco cave 🦇🎶";
+          break;
+        case 'Pink':
+          ending = "You were crowned Princess of Bubblegum Galaxy 👑🌸";
+          break;
+      }
+
+      document.getElementById("scene").innerHTML = `
+        <div class="message">You picked ${color}!</div>
+        <div class="caption">${ending}</div>
+        <button onclick="bonusRound()">Help me hahaha</button>
+      `;
+    }
+
+    function bonusRound() {
+      document.getElementById("scene").innerHTML = `
+        <div class="message">Would you rather wrestle a spaghetti monster 🍝 or sing to a cactus 🌵?</div>
+        <button onclick="finalResult('spaghetti')">Spaghetti Monster</button>
+        <button onclick="finalResult('cactus')">Cactus Singer</button>
+      `;
+    }
+
+    function finalResult(choice) {
+      const msg = choice === 'spaghetti'
+        ? "You slipped on a meatball and became Mayor of Pasta Town 🎉"
+        : "The cactus awarded you a Grammy for Best Desert Anthem 🌵🎵";
+
+      document.getElementById("scene").innerHTML = `
+        <div class="message">🌟 Finale!</div>
+        <div class="caption">${msg}</div>
+        <div class="caption">Keep it up, our President of Venus—you’re so good, so pretty, and truly out of this world! 💫👑</div>
+        <button onclick="startOver()">Play Again</button>
+      `;
+    }
+
+    function startOver() {
+      step = 0;
+      document.getElementById("scene").innerHTML = `
+        <div class="message">Hi Sheena 👋</div>
+        <button onclick="nextStep()">Next</button>
+      `;
+    }
+  </script>
+</body>
+</html>
